@@ -2,9 +2,8 @@ package excepciones;
 
 public class IsbnException extends Exception{
 
-	public IsbnException() {
+	public String getMessage() {
 		
-		super("EL ISBN ES INCORRECTO");
+		return "EL ISBN ES INCORRECTO";
 	}
-
 }

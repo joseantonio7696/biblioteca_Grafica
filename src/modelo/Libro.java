@@ -57,7 +57,7 @@ public class Libro {
 
 		String isbnNumericoSinGuion= isbn.replaceAll("-","");
 		if (isbn.equals("")) {
-			throw new CamposObligatorioException("ISBN");
+			throw new CamposObligatorioException();
 		}else if (isbnNumericoSinGuion.length()!=13) {
 			throw new IsbnException();
 		}else {
@@ -111,7 +111,7 @@ public class Libro {
 	public void setTitulo(String titulo) throws CamposObligatorioException {
 		
 		if (titulo.equals("")) {
-			throw new CamposObligatorioException("TITULO");
+			throw new CamposObligatorioException();
 		}
 		this.titulo = titulo;
 	}
@@ -122,7 +122,7 @@ public class Libro {
 
 	public void setAutor(String autor) throws CamposObligatorioException {
 		if (autor.equals("")) {
-			throw new CamposObligatorioException("AUTOR");
+			throw new CamposObligatorioException();
 		}
 		this.autor = autor;
 	}
@@ -133,7 +133,7 @@ public class Libro {
 
 	public void setEditorial(String editorial) throws CamposObligatorioException {
 		if (editorial.equals("")) {
-			throw new CamposObligatorioException("EDITORIAL");
+			throw new CamposObligatorioException();
 		}
 		this.editorial = editorial;
 	}
@@ -144,7 +144,7 @@ public class Libro {
 
 	public void setFechaRegistro(String fechaRegistro) throws ParseException, CamposObligatorioException {
 		if (fechaRegistro.equals("")) {
-			throw new CamposObligatorioException("FECHA REGISTRO");
+			throw new CamposObligatorioException();
 		}
 		
 		
@@ -164,7 +164,7 @@ public class Libro {
 
 	public void setPrecio(String precio) throws NumberFormatException, CamposObligatorioException{
 		if (precio.equals("")) {
-			throw new CamposObligatorioException("PRECIO");
+			throw new CamposObligatorioException();
 		}
 		
 		double precio2=Double.parseDouble(precio);
@@ -177,7 +177,7 @@ public class Libro {
 
 	public void setPrestado(String prestado) throws CamposObligatorioException {
 		if (prestado.equals("")) {
-			throw new CamposObligatorioException("PRECIO");
+			throw new CamposObligatorioException();
 		}
 		
 		boolean prestado2=Boolean.parseBoolean(prestado);

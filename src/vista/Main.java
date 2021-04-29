@@ -14,6 +14,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		/*
 		String isbn="978-84-8130-252-3";
 		String titulo="El Capitan AlaTriste";
 		String autor="Arturo Perez Reverte";
@@ -32,23 +33,27 @@ public class Main {
 			System.err.println(e.getMessage());
 		}
 		
+		
 		BibliotecaController bibliotecaController=null;
 		List<Libro> listadoLibros=new ArrayList<Libro>();
 		
 		try {
 			bibliotecaController=new BibliotecaController();
 			listadoLibros=bibliotecaController.getListado();
-			/*
-			for (Libro libro : listadoLibros) {
-				System.out.println(libro);
-			}
-			*/
+			
 		} catch (NumberFormatException | IOException | CamposObligatorioException | IsbnException | ParseException e) {
 			// TODO Auto-generated catch block
 			System.err.println(e.getMessage());
 		}
 		
-		Formulario frmFormulario=new Formulario(listadoLibros);
+		*/
+		
+		try {
+			Formulario frmFormulario=new Formulario();
+		} catch (NumberFormatException | IOException | CamposObligatorioException | IsbnException | ParseException e) {
+			// TODO Auto-generated catch block
+			
+		}
 		
 		
 	}

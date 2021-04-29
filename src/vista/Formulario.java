@@ -10,12 +10,18 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
+import controlador.BibliotecaController;
+import excepciones.CamposObligatorioException;
+import excepciones.ContainsException;
+import excepciones.IsbnException;
 import modelo.Libro;
 
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +34,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.text.ParseException;
 import java.awt.event.ActionEvent;
 
 public class Formulario extends JFrame {
@@ -67,21 +75,33 @@ public class Formulario extends JFrame {
 	private JTextField textFieldPrecio;
 	private JLabel lblPrecio;
 	private int punteroNavegacion = 0;
+	JFrame frame;
+	private BibliotecaController bibliotecaController;
+	private List<Libro> listadoLibros;
 
-	public Formulario(List<Libro> listadoLibros) {
+	public Formulario() throws NumberFormatException, IOException, CamposObligatorioException, IsbnException, ParseException {
+		
+		
+		bibliotecaController=new BibliotecaController();
+		listadoLibros=bibliotecaController.getListado();
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1406, 668);
 		panel = new JPanel();
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(panel);
 		panel.setLayout(null);
+		
+		
 
-		definirVentana(listadoLibros);
-		definirEventos(listadoLibros);
+		definirVentana();
+		definirEventos();
 		setVisible(true);
 	}
 
-	private void definirVentana(List<Libro> listadoLibros) {
+	private void definirVentana() {
+		
+		this.frame=this;
 
 		panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 255), 2), "Mantenimiento Libros",
@@ -276,20 +296,147 @@ public class Formulario extends JFrame {
 		dtm = new DefaultTableModel(); // IMPORTANTE INSTANCIAR EL DTM
 		tableLibros = new JTable(dtm); // IMPORTANTE ENVIARLE A LA TABLA LOS DATOS DEL DTM
 		scrollPane.setViewportView(tableLibros);
-		cargarGrid(listadoLibros);
+		cargarGrid();
 
 	}
 
-	private void definirEventos(List<Libro> listadoLibros) {
+	private void definirEventos() {
 		
-		panelDeNavegacion(listadoLibros);
+		panelDeNavegacion();
 
-		
+		panelMantenimiento();
 		
 
 	}
 
-	private void panelDeNavegacion(List<Libro> listadoLibros) {
+	private void panelMantenimiento() {
+		
+		
+		btnNuevo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				btnInicio.setEnabled(false);
+				btnRetroceder.setEnabled(false);
+				btnAvanzar.setEnabled(false);
+				btnFinal.setEnabled(false);
+				
+				btnGuardar.setEnabled(true);
+				btnDeshacer.setEnabled(true);
+				btnEditar.setEnabled(false);
+				btnNuevo.setEnabled(false);
+				btnEliminar.setEnabled(false);
+				
+				textFieldISBN.setEditable(true);
+				textFieldTitulo.setEditable(true);
+				textFieldAutor.setEditable(true);
+				textFieldEditorial.setEditable(true);
+				textFieldFecha.setEditable(true);
+				textFieldPrecio.setEditable(true);
+				chcPrestado.setEnabled(true);
+				
+				textFieldISBN.setText("");
+				textFieldTitulo.setText("");
+				textFieldAutor.setText("");
+				textFieldEditorial.setText("");
+				textFieldFecha.setText("");
+				textFieldPrecio.setText("");
+				chcPrestado.setSelected(false);
+				
+				
+				
+				
+				
+			}
+		});
+		
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				try {
+					bibliotecaController.agregarLibro(textFieldISBN.getText(), textFieldTitulo.getText(), textFieldAutor.getText(), textFieldEditorial.getText(), textFieldFecha.getText(), textFieldPrecio.getText(), String.valueOf(chcPrestado.isSelected()));
+					
+				} catch (NumberFormatException | CamposObligatorioException | IsbnException | ParseException | ContainsException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(frame, e1.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
+				}
+				
+				
+				try {
+					bibliotecaController.guardarDatos();
+					
+					cargarGrid();
+					
+					textFieldISBN.setText("");
+					textFieldTitulo.setText("");
+					textFieldAutor.setText("");
+					textFieldEditorial.setText("");
+					textFieldFecha.setText("");
+					textFieldPrecio.setText("");
+					chcPrestado.setSelected(false);
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					JOptionPane.showMessageDialog(frame, e1.getMessage(),"ERROR",JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+		
+		btnDeshacer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				String libros[] = listadoLibros.get(punteroNavegacion).toString().split(",");
+				
+				textFieldISBN.setEditable(false);
+				textFieldISBN.setText(libros[0]);
+				textFieldTitulo.setEditable(false);
+				textFieldTitulo.setText(libros[1]);
+				textFieldAutor.setEditable(false);
+				textFieldAutor.setText(libros[2]);
+				textFieldEditorial.setEditable(false);
+				textFieldEditorial.setText(libros[3]);
+				textFieldFecha.setEditable(false);
+				textFieldFecha.setText(libros[4]);
+				textFieldPrecio.setEditable(false);
+				textFieldPrecio.setText(libros[5]);
+				chcPrestado.setEnabled(false);
+				chcPrestado.setSelected(Boolean.parseBoolean(libros[6]));
+				
+				btnGuardar.setEnabled(false);
+				btnDeshacer.setEnabled(false);
+				btnEditar.setEnabled(true);
+				btnNuevo.setEnabled(true);
+				btnEliminar.setEnabled(true);
+				
+				if (punteroNavegacion == 0) {
+					btnInicio.setEnabled(false);
+					btnRetroceder.setEnabled(false);
+					btnAvanzar.setEnabled(true);
+					btnFinal.setEnabled(true);
+				} else if (punteroNavegacion > 0 && (punteroNavegacion <= listadoLibros.size()-2)) {
+
+					btnInicio.setEnabled(true);
+					btnRetroceder.setEnabled(true);
+					btnAvanzar.setEnabled(true);
+					btnFinal.setEnabled(true);
+				} else if(punteroNavegacion==(listadoLibros.size()-1)) {
+					btnInicio.setEnabled(true);
+					btnRetroceder.setEnabled(true);
+					btnAvanzar.setEnabled(false);
+					btnFinal.setEnabled(false);
+				}
+				
+			}
+		});
+		
+		
+		
+	}
+
+	private void panelDeNavegacion() {
 		
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -438,7 +585,7 @@ public class Formulario extends JFrame {
 		
 	}
 
-	private void cargarGrid(List<Libro> listadoLibros) {
+	private void cargarGrid() {
 		String[] titulos = { "ISBN", "TITULO", "AUTOR", "EDITORIAL", "FECHA PRESTAMO", "PRECIO", "PRESTADO" };
 		dtm.setRowCount(0); // Antes de llenar la tabla la vaciamos
 		dtm.setColumnCount(0);

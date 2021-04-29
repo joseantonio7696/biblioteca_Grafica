@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import excepciones.CamposObligatorioException;
+import excepciones.ContainsException;
 import excepciones.IsbnException;
 import modelo.Libro;
 
@@ -69,14 +70,14 @@ public class BibliotecaController {
 	}
 	
 	
-	public Libro agregarLibro(String isbn, String titulo, String autor, String editorial, String fechaRegistro, String precio, String prestado) throws NumberFormatException, CamposObligatorioException, IsbnException, ParseException {
+	public Libro agregarLibro(String isbn, String titulo, String autor, String editorial, String fechaRegistro, String precio, String prestado) throws NumberFormatException, CamposObligatorioException, IsbnException, ParseException, ContainsException {
 		
 		Libro libro=null;
 		
 		libro=new Libro(isbn, titulo, autor, editorial, fechaRegistro, precio, prestado);
 		
 		if (listado.contains(libro)) {
-			libro=null;
+			throw new ContainsException();
 		}else {
 			listado.add(libro);
 		}

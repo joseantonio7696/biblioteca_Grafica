@@ -2,8 +2,9 @@ package excepciones;
 
 public class CamposObligatorioException extends Exception{
 
-	public CamposObligatorioException(String campo) {
-		super("EL "+campo+" NO PUEDE ESTAR VACIO");
+	public String getMessage() {
+		
+		return "EL CAMPO NO PUEDE ESTAR VACIO";
 	}
 
 }
