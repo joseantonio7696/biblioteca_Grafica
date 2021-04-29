@@ -1,4 +1,4 @@
-978-84-8130-252-3,El Capitan AlaTriste,Arturo Perez Reverte,Alfaguara,2020-02-05,30.0,false
+978-84-8130-252-3,El Capitan AlaTriste,Arturo Perez Reverte,Alfaguara,2020-02-05,30.0,true
 978-84-2639-144-5,Un Asedio,Alejandro Ortega,EA'SPORT,2020-02-05,25.0,false
-978-84-204-0598-8,Los Cazadores de Mamuts,Maria Pilar Tejerina,Konami,2020-02-05,15.0,false
+978-84-204-0598-8,Los Cazadores de Mamuts,Maria Pilar Tejerina,Konami,2020-02-05,15.0,true
 978-84-7809-892-7,Un Anaquino,Jose Antonio Marquez,Editora,2020-02-05,10.0,false
