@@ -281,18 +281,7 @@ public class Formulario extends JFrame {
 	}
 
 	private void definirEventos(List<Libro> listadoLibros) {
-		
-		
-		
-		panelNavegacion(listadoLibros);
-		
-		hola tio;
-		
-	
-	}
 
-	private void panelNavegacion(List<Libro> listadoLibros) {
-		
 		btnInicio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
@@ -438,7 +427,7 @@ public class Formulario extends JFrame {
 			}
 		});
 		
-		
+
 	}
 
 	private void cargarGrid(List<Libro> listadoLibros) {
