@@ -277,6 +277,8 @@ public class Formulario extends JFrame {
 		tableLibros = new JTable(dtm); // IMPORTANTE ENVIARLE A LA TABLA LOS DATOS DEL DTM
 		scrollPane.setViewportView(tableLibros);
 		cargarGrid(listadoLibros);
+		
+		hola tio
 
 	}
 
