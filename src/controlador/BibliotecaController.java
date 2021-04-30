@@ -134,6 +134,48 @@ public class BibliotecaController {
 		
 	}
 	
+	public List<Libro> filtradoPrecio(String precio){
+		
+		List<Libro> filtrado=new ArrayList<Libro>();
+		
+		
+		for (Libro libro : listado) {
+			if (libro.getPrecio()==Double.parseDouble(precio)) {
+				filtrado.add(libro);
+			}
+		}
+		
+		if (filtrado.size()==0) {
+			filtrado=null;
+		}
+		
+		
+		return filtrado;
+		
+		
+	}
+	
+	public List<Libro> filtradoEditorial(String editorial){
+		
+		List<Libro> filtrado=new ArrayList<Libro>();
+		
+		
+		for (Libro libro : listado) {
+			if (libro.getEditorial().equals(editorial)) {
+				filtrado.add(libro);
+			}
+		}
+		
+		if (filtrado.size()==0) {
+			filtrado=null;
+		}
+		
+		
+		return filtrado;
+		
+		
+	}
+	
 	
 	
 	public Libro buscarLibro(String isbn){
@@ -199,6 +241,20 @@ public Libro editarLibro(String isbn,String isbn2, String titulo, String autor, 
 		
 		bw.close();bw=null;
 		fw.close();fw=null;
+		
+		
+	}
+	
+	public void borrarDatos(String isbn) {
+		
+		for (Libro libro : listado) {
+			
+			if (libro.getIsbn().equals(isbn)) {
+				listado.remove(libro);
+				break;
+			}
+				
+			}
 		
 		
 	}
